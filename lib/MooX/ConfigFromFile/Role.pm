@@ -26,18 +26,20 @@ sub load_config
     return $class->new( %{ $class->loaded_config }, %params );
 }
 
-has 'config_files_to_load' => ( is => 'lazy' );
+has 'config_files' => ( is => 'lazy' );
 
-sub _build_config_files_to_load
+sub _build_config_files
 {
     my ($self) = @_;
 
-    my $can_config_prefix = $class->can("config_prefix");
-    my $main_file = $can_config_prefix ? $can_config_prefix->() : $Script;
+    my $can_config_prefix = $self->can("config_prefix");
+    my $main_file = $can_config_prefix ? $can_config_prefix->($self) : $Script;
 
-    my @cfg_dirs    = $class->config_dirs();
+    my $cfg_dirs    = $self->config_dirs();
+    #Test::More::diag(Test::More::explain(\$cfg_dirs));
+    ref $cfg_dirs eq "ARRAY" or $cfg_dirs = ["."];
     my @cfg_pattern = map { $main_file . "." . $_ } Config::Any->extensions();
-    my @cfg_files   = File::Find::Rule->file()->name(@cfg_pattern)->maxdepth(1)->in(@cfg_dirs);
+    my @cfg_files   = File::Find::Rule->file()->name(@cfg_pattern)->maxdepth(1)->in(@$cfg_dirs);
 
     return \@cfg_files;
 }
@@ -51,7 +53,7 @@ sub _build_loaded_config
 {
     my ($self) = @_;
 
-    my $files = $self->config_files_to_load;
+    my $files = $self->config_files;
     return {} if !@$files;
 
     my $config = Config::Any->load_files(
