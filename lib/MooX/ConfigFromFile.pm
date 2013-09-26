@@ -4,6 +4,8 @@ use 5.008003;
 use strict;
 use warnings FATAL => 'all';
 
+our $VERSION = '0.001';
+
 sub import
 {
     my ( undef, @import ) = @_;
@@ -23,13 +25,27 @@ sub import
 
 =head1 NAME
 
-MooX::ConfigFromFile - The great new MooX::ConfigFromFile!
-
-=cut
-
-our $VERSION = '0.001';
+MooX::ConfigFromFile - Moo eXtension for initializing objects from config file
 
 =head1 SYNOPSIS
+
+   package Role::Action;
+
+   use Moo::Role;
+
+   has operator => ( ... );
+
+   package Action;
+
+   use Moo;
+
+   with "Role::Action", "MooX::ConfigFromFile";
+
+   sub operate {
+       my $self = shift;
+
+       return say $self->operator;
+   }
 
 =head1 AUTHOR
 
@@ -37,19 +53,17 @@ Jens Rehsack, C<< <rehsack at cpan.org> >>
 
 =head1 BUGS
 
-Please report any bugs or feature requests to C<bug-moox-configfromfile at rt.cpan.org>, or through
-the web interface at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=MooX-ConfigFromFile>.  I will be notified, and then you'll
-automatically be notified of progress on your bug as I make changes.
-
-
-
+Please report any bugs or feature requests to
+C<bug-moox-configfromfile at rt.cpan.org>, or through the web interface at
+L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=MooX-ConfigFromFile>.
+I will be notified, and then you'll automatically be notified of progress
+on your bug as I make changes.
 
 =head1 SUPPORT
 
 You can find documentation for this module with the perldoc command.
 
     perldoc MooX::ConfigFromFile
-
 
 You can also look for information at:
 
@@ -86,7 +100,6 @@ under the terms of either: the GNU General Public License as published
 by the Free Software Foundation; or the Artistic License.
 
 See L<http://dev.perl.org/licenses/> for more information.
-
 
 =cut
 

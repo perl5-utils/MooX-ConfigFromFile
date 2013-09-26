@@ -14,8 +14,6 @@ use File::Find::Rule;
 
 with "MooX::File::ConfigDir";
 
-sub BUILDARGS { my $self = shift; my %params = @_; \%params }
-
 around BUILDARGS => sub {
     my $next   = shift;
     my $class  = shift;
@@ -85,5 +83,40 @@ sub _build_loaded_config
     return $config_merged;
 
 }
+
+=head1 NAME
+
+MooX::ConfigFromFile::Role - Moo eXtension for initializing objects from config file
+
+=head1 DESCRIPTION
+
+This role adds a initializing sub around L<BUILDARGS|Moose::Manual::Construction/BUILDARGS>
+and puts all what could read from config files into the hash which will be
+used to construct the final object.
+
+While it does that, it internally calls it's own _build_* methods (I<_build_config_prefix>,
+I<_build_config_files> and I<_build_loaded_config>) unless the appropriate attributes are
+already in C<$params>.
+
+=head1 AUTHOR
+
+Jens Rehsack, C<< <rehsack at cpan.org> >>
+
+=head1 ACKNOWLEDGEMENTS
+
+Toby Inkster suggested to rely on BUILDARGS instead of intercepting object
+creation with nasty hacks. Also teached me a bit more how Moo(se) works.
+
+=head1 LICENSE AND COPYRIGHT
+
+Copyright 2013 Jens Rehsack.
+
+This program is free software; you can redistribute it and/or modify it
+under the terms of either: the GNU General Public License as published
+by the Free Software Foundation; or the Artistic License.
+
+See L<http://dev.perl.org/licenses/> for more information.
+
+=cut
 
 1;
