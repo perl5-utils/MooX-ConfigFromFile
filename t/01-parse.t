@@ -41,7 +41,7 @@ my $dist_basedir =
     }
 }
 
-my $adder = Calc::add->new_with_config();
+my $adder = Calc::add->new();
 ok(defined($adder->a), "read 'a' from config");
 ok(defined($adder->b), "read 'b' from config");
 cmp_ok($adder->execute, "==", 5, "read right adder config");
