@@ -20,14 +20,11 @@ my $builder = Module::Build->new(
         'Test::More' => 0,
     },
     requires => {
-        #'ABC'              => 1.6,
-        #'Foo::Bar::Module' => 5.0401,
 	"Config::Any" => 0,
-	"File::ConfigDir" => 0.005,
 	"File::Find::Rule" => "0.30",
 	"FindBin" => 0,
 	"Moo" => "1.003",
-	"MooX::File::ConfigDir" => "0.001",
+	"MooX::File::ConfigDir" => "0.002",
     },
     add_to_cleanup     => [ 'MooX-ConfigFromFile-*' ],
     meta_merge =>
