@@ -41,7 +41,7 @@ my $dist_basedir =
     }
 }
 
-my $adder = Calc::add->new();
+my $adder = Calc::add->new( config_prefix => 'calc-operands' );
 ok(defined($adder->a), "read 'a' from config");
 ok(defined($adder->b), "read 'b' from config");
 cmp_ok($adder->execute, "==", 5, "read right adder config");
