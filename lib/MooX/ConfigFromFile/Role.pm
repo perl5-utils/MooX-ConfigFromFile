@@ -14,7 +14,7 @@ use File::Find::Rule;
 
 with "MooX::File::ConfigDir";
 
-sub BUILDARGS { {} }
+sub BUILDARGS { my $self = shift; my %params = @_; \%params }
 
 around BUILDARGS => sub {
     my $next   = shift;
@@ -50,8 +50,8 @@ sub _build_config_files
     my ($class, $params) = @_;
 
     defined $params->{config_prefix} or $params->{config_prefix} = $class->_build_config_prefix($params);
-
     defined $params->{config_dirs} or $params->{config_dirs} = $class->_build_config_dirs($params);
+
     ref $params->{config_dirs} eq "ARRAY" or $params->{config_dirs} = ["."];
     my @cfg_pattern = map { $params->{config_prefix} . "." . $_ } Config::Any->extensions();
     my @cfg_files = File::Find::Rule->file()->name(@cfg_pattern)->maxdepth(1)->in(@{$params->{config_dirs}});
