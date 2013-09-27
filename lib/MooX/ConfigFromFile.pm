@@ -13,8 +13,13 @@ sub import
     my @target_isa;
     { no strict 'refs'; @target_isa = @{"${target}::ISA"} };
 
+    #don't add this to a role
+    #ISA of a role is always empty !
+    ## no critic qw/ProhibitStringyEval/
+    @target_isa or return;
+
     my $apply_modifiers = sub {
-        return if $target->can('new_with_config');
+        return if $target->can('_initialize_from_config');
 	my $with   = $target->can('with');
         $with->('MooX::ConfigFromFile::Role');
     };
