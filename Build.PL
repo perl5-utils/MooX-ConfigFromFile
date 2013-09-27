@@ -17,7 +17,10 @@ my $builder = Module::Build->new(
 	'File::Basename' => 0,
 	'File::Spec' => 0,
 	'JSON' => 0,
-        'Test::More' => 0,
+	'Test::More' => 0,
+	'Test::CPAN::Changes' => 0,
+	'Test::Pod::Spelling::CommonMistakes' => 0,
+	'Test::CheckManifest' => 0,
     },
     requires => {
 	"Config::Any" => 0,
@@ -25,6 +28,9 @@ my $builder = Module::Build->new(
 	"FindBin" => 0,
 	"Moo" => "1.003",
 	"MooX::File::ConfigDir" => "0.002",
+	"Import::Into" => 0,
+	"Module::Runtime" => 0,
+	"B::Hooks::EndOfScope" => 0,
     },
     add_to_cleanup     => [ 'MooX-ConfigFromFile-*' ],
     meta_merge =>
