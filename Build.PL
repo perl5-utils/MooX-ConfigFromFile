@@ -26,6 +26,18 @@ my $builder = Module::Build->new(
 	"Moo" => "1.003",
 	"MooX::File::ConfigDir" => "0.002",
     },
+    auto_features => {
+	author_testing => {
+	    description => "Enable dependencies for author testing",
+	    configure_requires => {
+		'Test::CPAN::Changes' => 0,
+		'Test::CheckManifest' => 0,
+		'Test::Pod' => 0,
+		'Test::Pod::Coverage' => 0,
+		'Test::Pod::Spelling::CommonMistakes' => 0,
+	    },
+	},
+    },
     add_to_cleanup     => [ 'MooX-ConfigFromFile-*' ],
     meta_merge =>
         { resources => { repository => "https://github.com/rehsack/MooX-ConfigFromFile", }, },
