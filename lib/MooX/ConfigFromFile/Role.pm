@@ -98,6 +98,27 @@ While it does that, it internally calls it's own _build_* methods (I<_build_conf
 I<_build_config_files> and I<_build_loaded_config>) unless the appropriate attributes are
 already in C<$params>.
 
+=head1 ATTRIBUTES
+
+This role uses following attributes which might be suitable customized by
+overloading the appropriate builder or pass defaults in construction arguments.
+
+=head2 config_prefix
+
+This attribute defaults to L<FindBin>'s C<$Script>. It's interpreted as the
+basename of the config file name to use.
+
+=head2 config_dirs
+
+This attribute is included from L<MooX::ConfigDir|MooX::ConfigDir/config_dirs>.
+It might be unclever to override - but possible. Use with caution.
+
+=head2 config_files
+
+This attribute contains the list of existing files in I<config_dirs> matching
+I<config_prefix> . L<Config::Any-E<gt>extensions|Config::Any/extensions>.
+Search is operated by L<File::Find::Rule>.
+
 =head1 AUTHOR
 
 Jens Rehsack, C<< <rehsack at cpan.org> >>

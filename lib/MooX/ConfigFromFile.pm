@@ -43,14 +43,56 @@ MooX::ConfigFromFile - Moo eXtension for initializing objects from config file
    package Action;
 
    use Moo;
+   use MooX::ConfigFromFile; # imports the MooX::ConfigFromFile::Role
 
-   with "Role::Action", "MooX::ConfigFromFile";
+   with "Role::Action";
 
    sub operate {
        my $self = shift;
 
        return say $self->operator;
    }
+
+   package OtherAction;
+
+   use Moo;
+
+   with "Role::Action", "MooX::ConfigFromFile::Role";
+
+   sub operate {
+       my $self = shift;
+
+       return warn $self->operator;
+   }
+
+   package QuiteOtherOne;
+
+   use Moo;
+
+   use MooX::ConfigFromFile; # imports the MooX::ConfigFromFile::Role
+
+   with "Role::Action";
+
+   sub _build_config_prefix { "die" }
+
+   sub operate {
+       my $self = shift;
+
+       return die $self->operator;
+   }
+
+   package main;
+
+   my $action = Action->new(); # tries to find a config file in config_dirs and loads it
+   my $other = OtherAction->new( config_prefix => "warn" ); # use another config file
+   my $quite_o = QuiteOtherOne->new(); # quite another way to have an individual config file
+
+=head1 DESCRIPTION
+
+This module is intended to easy load initialization values for attributes
+on object construction from an appropriate config file. The building is
+done in L<MooX::ConfigFromFile::Rule> - using MooX::ConfigFromFile ensures
+the role is applied.
 
 =head1 AUTHOR
 
