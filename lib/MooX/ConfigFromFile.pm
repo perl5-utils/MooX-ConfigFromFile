@@ -6,26 +6,19 @@ use warnings FATAL => 'all';
 
 our $VERSION = '0.003';
 
+use Import::Into;
+use Module::Runtime qw/use_module/;
+ 
+use B::Hooks::EndOfScope;
+
 sub import
 {
-    my ( undef, @import ) = @_;
-    my $target = caller;
-    my @target_isa;
-    { no strict 'refs'; @target_isa = @{"${target}::ISA"} };
-
-    #don't add this to a role
-    #ISA of a role is always empty !
-    ## no critic qw/ProhibitStringyEval/
-    @target_isa or return;
-
-    my $apply_modifiers = sub {
-        return if $target->can('_initialize_from_config');
-	my $with   = $target->can('with');
-        $with->('MooX::ConfigFromFile::Role');
-    };
-    $apply_modifiers->();
-
-    return;
+	my $target = caller;
+	use_module('Moo')->import::into($target);
+	on_scope_end {
+		$target->can('with')->('MooX::ConfigFromFile::Role');
+	};
+	return;
 }
 
 =head1 NAME
