@@ -6,21 +6,21 @@ use 5.008001;
 use ExtUtils::MakeMaker;
 
 my %RUN_DEPS = (
-	"Config::Any" => 0,
-	"File::Find::Rule" => "0.30",
-	"FindBin" => 0,
-	"Moo" => "1.003",
-	"MooX::File::ConfigDir" => "0.002",
+    "Config::Any"           => 0,
+    "File::Find::Rule"      => "0.30",
+    "FindBin"               => 0,
+    "Moo"                   => "1.003",
+    "MooX::File::ConfigDir" => "0.002",
 );
 my %CONFIGURE_DEPS = (
     'ExtUtils::MakeMaker' => 0,
 );
 my %BUILD_DEPS = (
-	'Cwd' => 0,
-	'File::Basename' => 0,
-	'File::Spec' => 0,
-	'JSON' => 0,
-        'Test::More' => 0,
+    'Cwd'            => 0,
+    'File::Basename' => 0,
+    'File::Spec'     => 0,
+    'JSON'           => 0,
+    'Test::More'     => 0,
 );
 
 my %TEST_DEPS = (
