@@ -1,6 +1,5 @@
 package MooX::ConfigFromFile;
 
-use 5.008003;
 use strict;
 use warnings FATAL => 'all';
 
