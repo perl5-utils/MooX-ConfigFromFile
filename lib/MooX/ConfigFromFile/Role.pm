@@ -110,7 +110,7 @@ basename of the config file name to use.
 
 =head2 config_dirs
 
-This attribute is included from L<MooX::ConfigDir|MooX::ConfigDir/config_dirs>.
+This attribute is included from L<MooX::File::ConfigDir|MooX::File::ConfigDir/config_dirs>.
 It might be unclever to override - but possible. Use with caution.
 
 =head2 config_files

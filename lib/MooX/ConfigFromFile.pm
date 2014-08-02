@@ -91,7 +91,7 @@ MooX::ConfigFromFile - Moo eXtension for initializing objects from config file
 
 This module is intended to easy load initialization values for attributes
 on object construction from an appropriate config file. The building is
-done in L<MooX::ConfigFromFile::Rule> - using MooX::ConfigFromFile ensures
+done in L<MooX::ConfigFromFile::Role> - using MooX::ConfigFromFile ensures
 the role is applied.
 
 =head1 AUTHOR
