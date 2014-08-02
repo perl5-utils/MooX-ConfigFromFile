@@ -1,5 +1,10 @@
 Revision history for MooX-ConfigFromFile
 
+0.003	2014-08-02
+    - fix links in documentation to fix RT#97429 (thanks abraxxa for
+      reporting)
+    - switch to ExtUtils::MakeMaker - it better maintained these days
+
 0.002	2013-09-27
     - improve documentation
     - add test to verify we're working on Moose, too
