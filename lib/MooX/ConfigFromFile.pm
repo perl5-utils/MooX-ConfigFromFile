@@ -19,7 +19,7 @@ sub import
 
     my $apply_modifiers = sub {
         return if $target->can('_initialize_from_config');
-	my $with   = $target->can('with');
+        my $with = $target->can('with');
         $with->('MooX::ConfigFromFile::Role');
     };
     $apply_modifiers->();

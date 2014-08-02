@@ -24,7 +24,7 @@ around BUILDARGS => sub {
 
 sub _initialize_from_config
 {
-    my ($class, $params) = @_;
+    my ( $class, $params ) = @_;
     defined $params->{loaded_config} or $params->{loaded_config} = $class->_build_loaded_config($params);
 
     # This copies stuff from loaded_config into the object's parameters
@@ -45,36 +45,36 @@ has 'config_files' => ( is => 'lazy' );
 
 sub _build_config_files
 {
-    my ($class, $params) = @_;
+    my ( $class, $params ) = @_;
 
     defined $params->{config_prefix} or $params->{config_prefix} = $class->_build_config_prefix($params);
-    defined $params->{config_dirs} or $params->{config_dirs} = $class->_build_config_dirs($params);
+    defined $params->{config_dirs}   or $params->{config_dirs}   = $class->_build_config_dirs($params);
 
     ref $params->{config_dirs} eq "ARRAY" or $params->{config_dirs} = ["."];
     my @cfg_pattern = map { $params->{config_prefix} . "." . $_ } Config::Any->extensions();
-    my @cfg_files = File::Find::Rule->file()->name(@cfg_pattern)->maxdepth(1)->in(@{$params->{config_dirs}});
+    my @cfg_files = File::Find::Rule->file()->name(@cfg_pattern)->maxdepth(1)->in( @{ $params->{config_dirs} } );
 
     return \@cfg_files;
 }
 
 has 'loaded_config' => (
-                         is      => 'lazy',
-                         clearer => 1
-                       );
+    is      => 'lazy',
+    clearer => 1
+);
 
 sub _build_loaded_config
 {
-    my ($class, $params) = @_;
+    my ( $class, $params ) = @_;
 
     defined $params->{config_files} or $params->{config_files} = $class->_build_config_files($params);
-    return {} if !@{$params->{config_files}};
+    return {} if !@{ $params->{config_files} };
 
     my $config = Config::Any->load_files(
-                                          {
-                                            files   => $params->{config_files},
-                                            use_ext => 1
-                                          }
-                                        );
+        {
+            files   => $params->{config_files},
+            use_ext => 1
+        }
+    );
     my $config_merged = {};
     for my $c ( map { values %$_ } @$config )
     {
