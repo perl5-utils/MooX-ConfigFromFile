@@ -126,7 +126,7 @@ Jens Rehsack, C<< <rehsack at cpan.org> >>
 =head1 ACKNOWLEDGEMENTS
 
 Toby Inkster suggested to rely on BUILDARGS instead of intercepting object
-creation with nasty hacks. Also teached me a bit more how Moo(se) works.
+creation with nasty hacks. He also taught me a bit more how Moo(se) works.
 
 =head1 LICENSE AND COPYRIGHT
 
