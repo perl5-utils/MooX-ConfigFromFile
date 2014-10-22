@@ -5,9 +5,11 @@ use warnings FATAL => 'all';
 
 our $VERSION = '0.004';
 
+my %loaded_configs;
+
 sub import
 {
-    my ( undef, @import ) = @_;
+    my ( undef, %import_options ) = @_;
     my $target = caller;
     my @target_isa;
     { no strict 'refs'; @target_isa = @{"${target}::ISA"} };
@@ -23,6 +25,35 @@ sub import
         $with->('MooX::ConfigFromFile::Role');
     };
     $apply_modifiers->();
+
+    my $around;
+    defined $import_options{config_singleton} and $import_options{config_singleton} and do
+    {
+        $around or $around = $target->can('around');
+        $around->(
+            _build_loaded_config => sub {
+                my $orig  = shift;
+                my $self  = shift;
+                my $class = ref $self ? ref $self : $self;
+                defined $loaded_configs{$class} or $loaded_configs{$class} = $self->$orig(@_);
+                return $loaded_configs{$class};
+            }
+        );
+    };
+
+    my %default_modifiers = (
+        config_prefix     => '_build_config_prefix',
+        config_extensions => '_build_config_extensions',
+        config_dirs       => '_build_config_dirs',
+        config_files      => '_build_config_files',
+    );
+
+    foreach my $opt_key ( keys %default_modifiers )
+    {
+        exists $import_options{$opt_key} or next;
+        $around or $around = $target->can('around');
+        $around->( $default_modifiers{$opt_key} => sub { $import_options{$opt_key} } );
+    }
 
     return;
 }

@@ -41,17 +41,22 @@ has 'config_prefix' => ( is => 'lazy' );
 
 sub _build_config_prefix { $Script; }
 
+has 'config_extensions' => ( is => 'lazy' );
+
+sub _build_config_extensions { [ Config::Any->extensions() ] }
+
 has 'config_files' => ( is => 'lazy' );
 
 sub _build_config_files
 {
     my ( $class, $params ) = @_;
 
-    defined $params->{config_prefix} or $params->{config_prefix} = $class->_build_config_prefix($params);
-    defined $params->{config_dirs}   or $params->{config_dirs}   = $class->_build_config_dirs($params);
+    defined $params->{config_prefix}     or $params->{config_prefix}     = $class->_build_config_prefix($params);
+    defined $params->{config_dirs}       or $params->{config_dirs}       = $class->_build_config_dirs($params);
+    defined $params->{config_extensions} or $params->{config_extensions} = $class->_build_config_extensions($params);
 
     ref $params->{config_dirs} eq "ARRAY" or $params->{config_dirs} = ["."];
-    my @cfg_pattern = map { $params->{config_prefix} . "." . $_ } Config::Any->extensions();
+    my @cfg_pattern = map { $params->{config_prefix} . "." . $_ } @{ $params->{config_extensions} };
     my @cfg_files = File::Find::Rule->file()->name(@cfg_pattern)->maxdepth(1)->in( @{ $params->{config_dirs} } );
 
     return \@cfg_files;
