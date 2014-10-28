@@ -108,6 +108,13 @@ already in C<$params>.
 This role uses following attributes which might be suitable customized by
 overloading the appropriate builder or pass defaults in construction arguments.
 
+Be sure to read L<MooX::File::ConfigDir/ATTRIBUTES>, especially
+L<MooX::File::ConfigDir/config_identifier> to understand how the L</config_dirs>
+are build.
+
+When you miss a directory - see L<File::ConfigDir/plug_dir_source> and
+L<File::ConfigDir::Plack>.
+
 =head2 config_prefix
 
 This attribute defaults to L<FindBin>'s C<$Script>. It's interpreted as the
@@ -115,14 +122,17 @@ basename of the config file name to use.
 
 =head2 config_dirs
 
-This attribute is included from L<MooX::File::ConfigDir|MooX::File::ConfigDir/config_dirs>.
-It might be unclever to override - but possible. Use with caution.
+This attribute is consumed from L<MooX::File::ConfigDir|MooX::File::ConfigDir/config_dirs>.
+It might not be smart to override - but possible. Use with caution.
+
+=head2 config_extensions
+
+This attribute defaults to list of extensions from L<Config::Any|Config::Any/extensions>.
 
 =head2 config_files
 
 This attribute contains the list of existing files in I<config_dirs> matching
-I<config_prefix> . L<Config::Any-E<gt>extensions|Config::Any/extensions>.
-Search is operated by L<File::Find::Rule>.
+I<config_prefix> . I<config_extensions>.  Search is operated by L<File::Find::Rule>.
 
 =head1 AUTHOR
 

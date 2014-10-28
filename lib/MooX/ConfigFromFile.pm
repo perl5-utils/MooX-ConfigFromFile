@@ -99,7 +99,8 @@ MooX::ConfigFromFile - Moo eXtension for initializing objects from config file
 
    use Moo;
 
-   use MooX::ConfigFromFile; # imports the MooX::ConfigFromFile::Role
+   # consumes the MooX::ConfigFromFile::Role but load config only once
+   use MooX::ConfigFromFile config_singleton => 1;
 
    with "Role::Action";
 
@@ -123,6 +124,41 @@ This module is intended to easy load initialization values for attributes
 on object construction from an appropriate config file. The building is
 done in L<MooX::ConfigFromFile::Role> - using MooX::ConfigFromFile ensures
 the role is applied.
+
+For easier usage, with 0.004, several options can be passed via I<use> resulting
+in default initializers for appropriate role attributes:
+
+=over 4
+
+=item C<config_prefix>
+
+Default for L<MooX::ConfigFromFile::Role/config_prefix>.
+
+=item C<config_extensions>
+
+Default for L<MooX::ConfigFromFile::Role/config_extensions>.
+
+=item C<config_dirs>
+
+Default for L<MooX::ConfigFromFile::Role/config_dirs>.
+Same warning regarding modifying this attribute applies here:
+Possible, but use with caution!
+
+=item C<config_files>
+
+Default for L<MooX::ConfigFromFile::Role/config_files>.
+
+Reasonable when you want exactly one config file in development mode.
+For production code it is highly recommended to override the builder.
+
+=item C<config_singleton>
+
+Flag adding a wrapper L<< around|Class::Method::Modifiers/around method(s) => sub { ... }; >>
+the I<builder> of L<MooX::ConfigFromFile::Role/loaded_config> to ensure a
+config is loaded only once per class. The I<per class> restriction results
+from applicable modifiers per class (and singletons are per class).
+
+=back
 
 =head1 AUTHOR
 
@@ -164,9 +200,7 @@ L<http://search.cpan.org/dist/MooX-ConfigFromFile/>
 
 =back
 
-
 =head1 ACKNOWLEDGEMENTS
-
 
 =head1 LICENSE AND COPYRIGHT
 
