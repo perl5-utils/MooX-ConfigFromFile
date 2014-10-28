@@ -1,5 +1,11 @@
 Revision history for MooX-ConfigFromFile
 
+0.004	2014-10-28
+    - add ability for options to importer of MooX::ConfigFromFile
+    - add option to have a singleton config (loaded once).
+    - improve documentation
+    - harmonize tests
+
 0.003	2014-08-02
     - fix links in documentation to fix RT#97429 (thanks abraxxa for
       reporting)
