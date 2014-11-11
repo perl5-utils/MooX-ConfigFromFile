@@ -1,5 +1,8 @@
 Revision history for MooX-ConfigFromFile
 
+0.005	2014-11-11
+    - Update Makefile.PL for up-to-date resources and requirements spec
+
 0.004	2014-10-28
     - add ability for options to importer of MooX::ConfigFromFile
     - add option to have a singleton config (loaded once).
