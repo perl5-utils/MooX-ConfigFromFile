@@ -1,7 +1,10 @@
 Revision history for MooX-ConfigFromFile
 
-0.005	2014-11-11
+0.005	2014-12-01
     - Update Makefile.PL for up-to-date resources and requirements spec
+    - consolidate Synopsis in main pod
+    - move from README to README.md
+    - improve author tests before releasing
 
 0.004	2014-10-28
     - add ability for options to importer of MooX::ConfigFromFile
