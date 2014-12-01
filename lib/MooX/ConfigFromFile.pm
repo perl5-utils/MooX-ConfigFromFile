@@ -3,7 +3,7 @@ package MooX::ConfigFromFile;
 use strict;
 use warnings FATAL => 'all';
 
-our $VERSION = '0.005';
+our $VERSION = '0.006';
 
 my %loaded_configs;
 
