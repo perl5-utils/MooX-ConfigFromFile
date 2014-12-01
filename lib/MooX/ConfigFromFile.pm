@@ -68,7 +68,7 @@ MooX::ConfigFromFile - Moo eXtension for initializing objects from config file
 
    use Moo::Role;
 
-   has operator => ( ... );
+   has operator => ( is => "ro" );
 
    package Action;
 
@@ -77,11 +77,7 @@ MooX::ConfigFromFile - Moo eXtension for initializing objects from config file
 
    with "Role::Action";
 
-   sub operate {
-       my $self = shift;
-
-       return say $self->operator;
-   }
+   sub operate { return say shift->operator; }
 
    package OtherAction;
 
@@ -89,11 +85,7 @@ MooX::ConfigFromFile - Moo eXtension for initializing objects from config file
 
    with "Role::Action", "MooX::ConfigFromFile::Role";
 
-   sub operate {
-       my $self = shift;
-
-       return warn $self->operator;
-   }
+   sub operate { return warn shift->operator; }
 
    package QuiteOtherOne;
 
@@ -106,11 +98,7 @@ MooX::ConfigFromFile - Moo eXtension for initializing objects from config file
 
    sub _build_config_prefix { "die" }
 
-   sub operate {
-       my $self = shift;
-
-       return die $self->operator;
-   }
+   sub operate { return die shift->operator; }
 
    package main;
 
