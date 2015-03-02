@@ -29,13 +29,12 @@ sub import
     my $around;
     defined $import_options{config_singleton} and $import_options{config_singleton} and do
     {
-        $around or $around = $target->can('around');
+        $around = $target->can('around');
         $around->(
             _build_loaded_config => sub {
                 my $orig  = shift;
-                my $self  = shift;
-                my $class = ref $self ? ref $self : $self;
-                defined $loaded_configs{$class} or $loaded_configs{$class} = $self->$orig(@_);
+                my $class = shift;
+                defined $loaded_configs{$class} or $loaded_configs{$class} = $class->$orig(@_);
                 return $loaded_configs{$class};
             }
         );
