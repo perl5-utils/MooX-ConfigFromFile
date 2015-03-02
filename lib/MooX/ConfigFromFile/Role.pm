@@ -41,9 +41,50 @@ has 'config_prefix' => ( is => 'lazy' );
 
 sub _build_config_prefix { $Script; }
 
+has 'config_prefix_map_separator' => ( is => 'lazy' );
+
+sub _build_config_prefix_map_separator { "-" }
+
+has 'config_prefix_map' => ( is => 'lazy' );
+
+sub _build_config_prefix_map
+{
+    my ( $class, $params ) = @_;
+
+    defined $params->{config_prefix_map_separator}
+      or $params->{config_prefix_map_separator} = $class->_build_config_prefix_map_separator($params);
+    defined $params->{config_prefix}        or $params->{config_prefix} = $class->_build_config_prefix($params);
+    ref $params->{config_prefix} eq "ARRAY" or $params->{config_prefix} = [ $params->{config_prefix} ];
+
+    my ( $sep, $i, @prefix_map ) = ( $params->{config_prefix_map_separator} );
+    for ( $i = 0; $i < scalar @{ $params->{config_prefix} }; ++$i )
+    {
+        push @prefix_map, join( $sep, @{ $params->{config_prefix} }[ 0 .. $i ] );
+    }
+
+    \@prefix_map;
+}
+
 has 'config_extensions' => ( is => 'lazy' );
 
 sub _build_config_extensions { [ Config::Any->extensions() ] }
+
+has 'config_files_pattern' => ( is => 'lazy' );
+
+sub _build_config_files_pattern
+{
+    my ( $class, $params ) = @_;
+
+    defined $params->{config_prefix_map} or $params->{config_prefix_map} = $class->_build_config_prefix_map($params);
+    defined $params->{config_extensions} or $params->{config_extensions} = $class->_build_config_extensions($params);
+    # my @cfg_pattern = map { $params->{config_prefix} . "." . $_ } @{ $params->{config_extensions} };
+    my @cfg_pattern = map {
+        my $ext = $_;
+        map { $_ . "." . $ext } @{ $params->{config_prefix_map} }
+    } @{ $params->{config_extensions} };
+
+    \@cfg_pattern;
+}
 
 has 'config_files' => ( is => 'lazy' );
 
@@ -51,13 +92,12 @@ sub _build_config_files
 {
     my ( $class, $params ) = @_;
 
-    defined $params->{config_prefix}     or $params->{config_prefix}     = $class->_build_config_prefix($params);
-    defined $params->{config_dirs}       or $params->{config_dirs}       = $class->_build_config_dirs($params);
-    defined $params->{config_extensions} or $params->{config_extensions} = $class->_build_config_extensions($params);
+    defined $params->{config_files_pattern} or $params->{config_files_pattern} = $class->_build_config_files_pattern($params);
+    defined $params->{config_dirs}          or $params->{config_dirs}          = $class->_build_config_dirs($params);
+    ref $params->{config_dirs} eq "ARRAY"   or $params->{config_dirs}          = ["."];
 
-    ref $params->{config_dirs} eq "ARRAY" or $params->{config_dirs} = ["."];
-    my @cfg_pattern = map { $params->{config_prefix} . "." . $_ } @{ $params->{config_extensions} };
-    my @cfg_files = File::Find::Rule->file()->name(@cfg_pattern)->maxdepth(1)->in( @{ $params->{config_dirs} } );
+    my @cfg_files =
+      File::Find::Rule->file()->name( @{ $params->{config_files_pattern} } )->maxdepth(1)->in( @{ $params->{config_dirs} } );
 
     return \@cfg_files;
 }
