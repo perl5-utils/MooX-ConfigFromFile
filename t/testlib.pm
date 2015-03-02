@@ -75,10 +75,17 @@ use FindBin;
     with 'Calc::Role::BinaryOperation';
 
     around BUILDARGS => sub {
-	my $next   = shift;
-	my $class  = shift;
-	my $loaded_config = { a => 12, b => 2 };
-	$class->$next(@_, loaded_config => $loaded_config, b => 3 );
+        my $next          = shift;
+        my $class         = shift;
+        my $loaded_config = {
+            a => 12,
+            b => 2
+        };
+        $class->$next(
+            @_,
+            loaded_config => $loaded_config,
+            b             => 3
+        );
     };
 
     sub execute
@@ -89,7 +96,7 @@ use FindBin;
 }
 
 {
-    package
+    package    #
       Dumb::Cfg;
 
     use Moo;
@@ -97,7 +104,7 @@ use FindBin;
 
     sub execute
     {
-	return;
+        return;
     }
 }
 
@@ -106,7 +113,10 @@ ok( defined( $adder->a ), "read 'a' from add config" );
 ok( defined( $adder->b ), "read 'b' from add config" );
 cmp_ok( $adder->execute, "==", 5, "read right adder config" );
 
-my $subber = Calc::sub->new( config_extensions => $adder->config_extensions, config_dirs => $adder->config_dirs );
+my $subber = Calc::sub->new(
+    config_extensions => $adder->config_extensions,
+    config_dirs       => $adder->config_dirs
+);
 ok( defined( $subber->a ), "read 'a' from sub config" );
 ok( defined( $subber->b ), "read 'b' from sub config" );
 cmp_ok( $subber->execute, "==", -1, "read right subber config" );
