@@ -138,5 +138,5 @@ cmp_ok( $div->execute, "==", 4, "read right div config" );
 
 my $dumb = Dumb::Cfg->new( config_dirs => 1 );
 isa_ok( $dumb, "Dumb::Cfg" );
-is_deeply( $dumb->config_dirs, [qw(.)], "fallback config dirs" );
-is( $dumb->config_prefix, $FindBin::Script, "fallback config prefix" );
+is_deeply( $dumb->config_dirs,   [qw(.)],            "fallback config dirs" );
+is_deeply( $dumb->config_prefix, [$FindBin::Script], "fallback config prefix" );
