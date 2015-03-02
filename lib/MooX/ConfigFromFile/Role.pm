@@ -41,6 +41,15 @@ has 'config_prefix' => ( is => 'lazy' );
 
 sub _build_config_prefix { $Script; }
 
+has 'config_prefixes' => ( is => 'lazy' );
+
+sub _build_config_prefixes
+{
+    my ( $class, $params ) = @_;
+    defined $params->{config_prefix} or $params->{config_prefix} = $class->_build_config_prefix($params);
+    [ $params->{config_prefix} ];
+}
+
 has 'config_prefix_map_separator' => ( is => 'lazy' );
 
 sub _build_config_prefix_map_separator { "-" }
@@ -53,13 +62,12 @@ sub _build_config_prefix_map
 
     defined $params->{config_prefix_map_separator}
       or $params->{config_prefix_map_separator} = $class->_build_config_prefix_map_separator($params);
-    defined $params->{config_prefix}        or $params->{config_prefix} = $class->_build_config_prefix($params);
-    ref $params->{config_prefix} eq "ARRAY" or $params->{config_prefix} = [ $params->{config_prefix} ];
+    defined $params->{config_prefixes} or $params->{config_prefixes} = $class->_build_config_prefixes($params);
 
     my ( $sep, $i, @prefix_map ) = ( $params->{config_prefix_map_separator} );
-    for ( $i = 0; $i < scalar @{ $params->{config_prefix} }; ++$i )
+    for ( $i = 0; $i < scalar @{ $params->{config_prefixes} }; ++$i )
     {
-        push @prefix_map, join( $sep, @{ $params->{config_prefix} }[ 0 .. $i ] );
+        push @prefix_map, join( $sep, @{ $params->{config_prefixes} }[ 0 .. $i ] );
     }
 
     \@prefix_map;

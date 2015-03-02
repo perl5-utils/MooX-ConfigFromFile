@@ -31,4 +31,4 @@ my $mf = Must::Fail->new;
 ok( !$mf->can("_initialize_from_config"), "Failed to apply MooX::ConfigFromFile::Role" );
 
 my $ar = Already::There->new;
-ok( !Role::Tiny::does_role($ar, "MooX::ConfigFromFile::Role"), "Skipped applying MooX::ConfigFromFile::Role" );
+ok( !Role::Tiny::does_role( $ar, "MooX::ConfigFromFile::Role" ), "Skipped applying MooX::ConfigFromFile::Role" );
