@@ -1,28 +1,34 @@
 use strict;
-use warnings FATAL => 'all';
+use warnings FATAL => "all";
 
+require Role::Tiny;
+
+eval sprintf( <<'EOCDECL', ($main::OO) x 1 );
 {
     package #
       Must::Fail;
 
     use MooX::ConfigFromFile;
 
-    sub new { bless {} shift }
+    sub new { bless {}, shift }
 }
 
 {
     package #
       Already::There;
 
-    use Moo;
-    use MooX::ConfigFromFile;
+    use %s;
 
     sub _initialize_from_config {}
+
+    use MooX::ConfigFromFile;
 }
+EOCDECL
+
+note $main::OO;
 
 my $mf = Must::Fail->new;
 ok( !$mf->can("_initialize_from_config"), "Failed to apply MooX::ConfigFromFile::Role" );
 
 my $ar = Already::There->new;
-#ok( !$ar->can("is_role"), "" );
-ok( !$ar->is_role("MooX::ConfigFromFile::Role"), "Skipped applying MooX::ConfigFromFile::Role" )
+ok( !Role::Tiny::does_role($ar, "MooX::ConfigFromFile::Role"), "Skipped applying MooX::ConfigFromFile::Role" );

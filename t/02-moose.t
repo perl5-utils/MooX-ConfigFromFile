@@ -12,6 +12,8 @@ BEGIN {
     $@ and plan skip_all => "Moose test requires Moose being installed";
 }
 
+our $OO = "Moose";
+
 do "t/testlib.pm";
 do "t/testerr.pm";
 

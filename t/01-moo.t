@@ -7,7 +7,9 @@ use warnings FATAL => 'all';
 
 use Test::More;
 
-do "t/testlib.pm";
+our $OO = "Moo";
+
 do "t/testerr.pm";
+do "t/testlib.pm";
 
 done_testing;
