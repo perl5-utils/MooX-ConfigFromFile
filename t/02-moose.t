@@ -13,8 +13,10 @@ BEGIN {
 }
 
 our $OO = "Moose";
+$ENV{WHICH_MOODEL} = "Moose";
 
 do "t/testlib.pm";
 do "t/testerr.pm";
+do "t/testmxcmd.pm";
 
 done_testing;

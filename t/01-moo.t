@@ -11,5 +11,6 @@ our $OO = "Moo";
 
 do "t/testerr.pm";
 do "t/testlib.pm";
+do "t/testmxcmd.pm";
 
 done_testing;

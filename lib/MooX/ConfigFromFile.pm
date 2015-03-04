@@ -41,10 +41,11 @@ sub import
     };
 
     my %default_modifiers = (
-        config_prefix     => '_build_config_prefix',
-        config_extensions => '_build_config_extensions',
-        config_dirs       => '_build_config_dirs',
-        config_files      => '_build_config_files',
+        config_prefix               => '_build_config_prefix',
+        config_prefix_map_separator => '_build_config_prefix_map_separator',
+        config_extensions           => '_build_config_extensions',
+        config_dirs                 => '_build_config_dirs',
+        config_files                => '_build_config_files',
     );
 
     foreach my $opt_key ( keys %default_modifiers )
@@ -120,6 +121,10 @@ in default initializers for appropriate role attributes:
 =item C<config_prefix>
 
 Default for L<MooX::ConfigFromFile::Role/config_prefix>.
+
+=item C<config_prefix_map_separator>
+
+Default for L<MooX::ConfigFromFile::Role/config_prefix_map_separator>.
 
 =item C<config_extensions>
 
