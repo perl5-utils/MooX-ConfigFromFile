@@ -42,6 +42,7 @@ sub import
 
     my %default_modifiers = (
         config_prefix               => '_build_config_prefix',
+        config_identifier           => '_build_config_identifier',
         config_prefix_map_separator => '_build_config_prefix_map_separator',
         config_extensions           => '_build_config_extensions',
         config_dirs                 => '_build_config_dirs',
@@ -149,6 +150,10 @@ Flag adding a wrapper L<< around|Class::Method::Modifiers/around method(s) => su
 the I<builder> of L<MooX::ConfigFromFile::Role/loaded_config> to ensure a
 config is loaded only once per class. The I<per class> restriction results
 from applicable modifiers per class (and singletons are per class).
+
+=item C<config_identifier>
+
+Default for L<MooX::File::ConfigDir/config_identifier>.
 
 =back
 
