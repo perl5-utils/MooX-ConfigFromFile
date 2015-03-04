@@ -60,8 +60,14 @@ WriteMakefile1(
             configure => {
                 requires => {%CONFIGURE_DEPS},
             },
-            build   => { requires => {%BUILD_DEPS} },
-            test    => { requires => {%TEST_DEPS} },
+            build => { requires => {%BUILD_DEPS} },
+            test  => {
+                requires => {%TEST_DEPS},
+                suggests => {
+                    'MooX::Cmd'     => '0.012',
+                    'MooX::Options' => '4.001'
+                }
+            },
             runtime => {
                 requires => {
                     %RUN_DEPS,
