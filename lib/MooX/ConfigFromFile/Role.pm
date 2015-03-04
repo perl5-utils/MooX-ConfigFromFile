@@ -133,8 +133,8 @@ sub _build_loaded_config
     {
         %$config_merged = ( %$config_merged, %$c );
     }
-    return $config_merged;
 
+    $config_merged;
 }
 
 =head1 NAME
@@ -165,8 +165,27 @@ L<File::ConfigDir::Plack>.
 
 =head2 config_prefix
 
-This attribute defaults to L<FindBin>'s C<$Script>. It's interpreted as the
-basename of the config file name to use.
+This attribute is a string and defaults to L<FindBin>'s C<$Script>. It's
+interpreted as the basename of the config file name to use.
+
+=head2 config_prefixes
+
+This attribute is an array of strings and defaults to C<<[ config_prefix ]>>.
+
+=head2 config_prefix_map_separator
+
+This attribute is a string and contains the character which is used building
+I<config_prefix_map> from I<config_prefixes>.
+
+=head2 config_prefix_map
+
+This attribute is an array of strings containing all config-prefixes joint
+together C<($0, $0.$1, $0.$1.$2, ...)> using I<config_prefix_map_separator>.
+
+=head2 config_files_pattern
+
+This attribute contains a cross-product of I<config_prefix_map> and
+I<config_extensions>. Both are concatenated using the shell wildcard '*'.
 
 =head2 config_dirs
 
@@ -181,6 +200,16 @@ This attribute defaults to list of extensions from L<Config::Any|Config::Any/ext
 
 This attribute contains the list of existing files in I<config_dirs> matching
 I<config_prefix> . I<config_extensions>.  Search is operated by L<File::Find::Rule>.
+
+=head2 loaded_config
+
+This attribute contains the config loaded while constructing the instance.
+For classes set up using
+
+  use MooX::ConfigFromFile config_singleton = 1;
+
+this attribute is cached from the very first construction and fed by overwritten
+I<builder>. The content of this attribute is passed to lower I<BUILDARGS>.
 
 =head1 AUTHOR
 
