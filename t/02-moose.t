@@ -17,6 +17,7 @@ $ENV{WHICH_MOODEL} = "Moose";
 
 do "t/testlib.pm";
 do "t/testerr.pm";
-do "t/testmxcmd.pm";
+eval "use MooX::Cmd 0.012; do 't/testmxcmd.pm'";
+eval "{package MooX::ConfigFromFile::Test::Availability::Of::MooX::Options; use $OO; use MooX::Options 4.001; }; do 't/testmxopt.pm'";
 
 done_testing;

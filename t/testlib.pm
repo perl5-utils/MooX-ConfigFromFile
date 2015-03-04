@@ -108,6 +108,7 @@ eval sprintf( <<'EOCDECL', ($main::OO) x 6 );
 }
 EOCDECL
 
+# This is for warn once
 note $main::OO;
 
 my $adder = Calc::add->new( config_prefix => "calc-operands" );
