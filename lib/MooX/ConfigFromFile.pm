@@ -201,7 +201,7 @@ L<http://search.cpan.org/dist/MooX-ConfigFromFile/>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright 2013-2014 Jens Rehsack.
+Copyright 2013-2015 Jens Rehsack.
 
 This program is free software; you can redistribute it and/or modify it
 under the terms of either: the GNU General Public License as published
