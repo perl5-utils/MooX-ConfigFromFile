@@ -125,6 +125,12 @@ foreach my $copy_attr ( map { "config_$_" } qw(extensions dirs prefix_map_separa
     cmp_ok( $subber->execute, "==", -1, "read right subber config using $copy_attr" );
 }
 
+my $secsub = Calc::sub->new( raw_loaded_config => [ { t => { b => 2, a => 4 } } ]);
+ok( defined( $secsub->a ), "read \"a\" from sub config" );
+ok( defined( $secsub->b ), "read \"b\" from sub config" );
+cmp_ok( $secsub->execute, "==", 2, "use right secsub config" );
+ok( Moo::Role::does_role( $secsub, "MooX::ConfigFromFile::Role" ), "Applying MooX::ConfigFromFile::Role" );
+
 my $mul1 = Calc::mul->new( b => 4 );
 ok( defined( $mul1->a ), "read \"a\" from mul1 config" );
 ok( defined( $mul1->b ), "read \"b\" from mul1 config" );
