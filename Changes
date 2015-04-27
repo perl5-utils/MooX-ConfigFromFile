@@ -1,5 +1,11 @@
 Revision history for MooX-ConfigFromFile
 
+0.007	2015-04-27
+    - separate loading and merging of configfile content
+    - ensure order of multiple loaded config files
+    - add support for merging deep structures in config files
+    - eval all test-libraries to be aware of mistakes
+
 0.006	2015-03-04
     - add rough support for multiple prefixes
     - fix incorrect meta-data and incomplete handling of newer eumm features
