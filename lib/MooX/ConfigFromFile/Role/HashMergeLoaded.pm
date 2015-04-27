@@ -75,6 +75,20 @@ MooX::ConfigFromFile::Role::HashMergeLoaded - allows better merge stragegies for
 This is an additional role for MooX::ConfigFromFile to allow better merging
 of deep structures.
 
+=head1 ATTRIBUTES
+
+=head2 config_merger
+
+This attribute contains the instance of the merger used to merge the
+I<raw_loaded_config> into I<loaded_config>.
+
+=head2 loaded_config
+
+This role modifies the builder for I<loaded_config> by merging the items
+from I<raw_loaded_config> in order of appearance. It is assumed that more
+relevant config files are in front and are filled up with defaults in
+following ones.
+
 =head1 AUTHOR
 
 Jens Rehsack, C<< <rehsack at cpan.org> >>

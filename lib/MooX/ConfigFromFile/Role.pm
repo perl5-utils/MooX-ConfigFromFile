@@ -120,14 +120,17 @@ sub _build_raw_loaded_config
     my ( $class, $params ) = @_;
 
     defined $params->{config_files} or $params->{config_files} = $class->_build_config_files($params);
-    return {} if !@{ $params->{config_files} };
+    return [] if !@{ $params->{config_files} };
 
-    Config::Any->load_files(
-        {
-            files   => $params->{config_files},
-            use_ext => 1
+    [
+        sort { my @a = %{$a}; my @b = %{$b}; $a[0] cmp $b[0]; } @{ Config::Any->load_files(
+                {
+                    files   => $params->{config_files},
+                    use_ext => 1
+                }
+            )
         }
-    );
+    ];
 }
 
 has 'loaded_config' => (
@@ -217,11 +220,15 @@ I<config_prefix> . I<config_extensions>.  Search is operated by L<File::Find::Ru
 =head2 raw_loaded_config
 
 This attribute contains the config as loaded from file system in an array of
-C<< filename => \%content >>. The filename part is ignored.
+C<< filename => \%content >>.  The result from L<Config::Any> is sorted by
+filename (C<< '-' < '.' >>).
 
 =head2 loaded_config
 
-This attribute contains the config loaded while constructing the instance.
+This attribute contains the config loaded and transformed while constructing
+the instance. Construction is done from I<raw_loaded_config>, ignoring the
+filename part.
+
 For classes set up using
 
   use MooX::ConfigFromFile config_singleton = 1;
