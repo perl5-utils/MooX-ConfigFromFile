@@ -10,6 +10,8 @@ my @tests = (
     [ [qw(test)], "MooXCmdTest", "MooXCmdTest::Cmd::Test", { unintialized_attribute => sub { time - $_[0] < 1 } } ],
     [ [qw(tested)], "MooXCmdTest", "MooXCmdTest::Cmd::Tested", { confidential_setting => 42 } ],
     [ [qw(test this)], "MooXCmdTest", "MooXCmdTest::Cmd::Test::Cmd::This", { dedicated_setting => 4711 } ],
+    [ [qw(test this hashmerged)], "MooXCmdTest", "MooXCmdTest::Cmd::Test::Cmd::This::Cmd::HashMerged",
+       { dedicated_setting => 4711, merged_frame => { kept_value => "sane", "overwritten_value" => "dammed" } } ],
 );
 
 for (@tests)

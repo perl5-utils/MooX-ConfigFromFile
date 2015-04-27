@@ -23,6 +23,7 @@ my %TEST_DEPS = (
     'Cwd'            => 0,
     'File::Basename' => 0,
     'File::Spec'     => 0,
+    'Hash::Merge'    => 0,
     'JSON'           => 0,
     'Test::More'     => 0.90,
 );
@@ -73,6 +74,9 @@ WriteMakefile1(
                     %RUN_DEPS,
                     perl => '5.8.1',
                 },
+		suggests => {
+                    "Hash::Merge" => 0,
+		}
             },
         },
     },
