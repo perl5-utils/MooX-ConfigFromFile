@@ -34,7 +34,7 @@ around _build_loaded_config => sub {
 
 =head1 NAME
 
-MooX::ConfigFromFile::Role::HashMergeLoaded - allows better merge stragegies for multiple config files
+MooX::ConfigFromFile::Role::HashMergeLoaded - allows better merge strategies for multiple config files
 
 =head1 SYNOPSIS
 
