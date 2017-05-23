@@ -9,7 +9,7 @@ my %loaded_configs;
 
 sub import
 {
-    my ( undef, %import_options ) = @_;
+    my (undef, %import_options) = @_;
     my $target = caller;
     my @target_isa;
     { no strict 'refs'; @target_isa = @{"${target}::ISA"} };
@@ -49,11 +49,11 @@ sub import
         config_files                => '_build_config_files',
     );
 
-    foreach my $opt_key ( keys %default_modifiers )
+    foreach my $opt_key (keys %default_modifiers)
     {
         exists $import_options{$opt_key} or next;
         $around or $around = $target->can('around');
-        $around->( $default_modifiers{$opt_key} => sub { $import_options{$opt_key} } );
+        $around->($default_modifiers{$opt_key} => sub { $import_options{$opt_key} });
     }
 
     return;
