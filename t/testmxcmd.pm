@@ -12,6 +12,9 @@ my @tests = (
     [ [qw(test this)], "MooXCmdTest", "MooXCmdTest::Cmd::Test::Cmd::This", { dedicated_setting => 4711 } ],
     [ [qw(test this hashmerged)], "MooXCmdTest", "MooXCmdTest::Cmd::Test::Cmd::This::Cmd::HashMerged",
        { dedicated_setting => 4711, merged_frame => { kept_value => "sane", "overwritten_value" => "dammed" } } ],
+    [ [qw(test shortcut)], "MooXCmdTest", "MooXCmdTest::Cmd::Test::Cmd::Shortcut", { complex_attribute => [ 4711 ] } ],
+    [ [qw(test shortcut hashmerged)], "MooXCmdTest", "MooXCmdTest::Cmd::Test::Cmd::Shortcut::Cmd::HashMerged",
+       { complex_attribute => [ 501, 4711 ] } ],
 );
 
 for (@tests)
