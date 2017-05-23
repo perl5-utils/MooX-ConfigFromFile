@@ -9,6 +9,8 @@ use Test::More;
 
 our $OO = "Moo";
 
+unshift @INC, "." unless grep { "." eq $_ } @INC;
+
 eval "do 't/testerr.pm'";
 eval "do 't/testlib.pm'";
 eval "use MooX::Cmd 0.012; do 't/testmxcmd.pm'";
