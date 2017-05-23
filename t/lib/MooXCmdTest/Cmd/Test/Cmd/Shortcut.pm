@@ -10,7 +10,9 @@ BEGIN
     $@ and die $@;
     $moodel->import;
 }
-use MooX::ConfigFromFile config_identifier => "MooXCmdTest", config_prefixes => [];
+use MooX::ConfigFromFile
+  config_identifier => "MooXCmdTest",
+  config_prefixes   => [];
 use MooX::Cmd with_config_from_file => 1;
 
 has complex_attribute => (

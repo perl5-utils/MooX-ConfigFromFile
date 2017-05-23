@@ -85,7 +85,7 @@ sub _build_config_files_pattern
 
     defined $params->{config_prefix_map} or $params->{config_prefix_map} = $class->_build_config_prefix_map($params);
     defined $params->{config_extensions} or $params->{config_extensions} = $class->_build_config_extensions($params);
-    # my @cfg_pattern = map { $params->{config_prefix} . "." . $_ } @{ $params->{config_extensions} };
+    ## no critic (BuiltinFunctions::ProhibitComplexMappings)
     my @cfg_pattern = map {
         my $ext = $_;
         map { $_ . "." . $ext } @{$params->{config_prefix_map}}
@@ -123,6 +123,7 @@ sub _build_raw_loaded_config
     return [] if !@{$params->{config_files}};
 
     [
+        ## no critic (BuiltinFunctions::RequireSimpleSortBlock)
         sort { my @a = %{$a}; my @b = %{$b}; $a[0] cmp $b[0]; } @{Config::Any->load_files(
                 {
                     files   => $params->{config_files},
