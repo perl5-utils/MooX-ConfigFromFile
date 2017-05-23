@@ -23,6 +23,7 @@ sub import
         return if $target->can('_initialize_from_config');
         my $with = $target->can('with');
         $with->('MooX::ConfigFromFile::Role');
+        $import_options{config_hashmergeloaded} and $with->('MooX::ConfigFromFile::Role::HashMergeLoaded');
     };
     $apply_modifiers->();
 
@@ -42,6 +43,7 @@ sub import
 
     my %default_modifiers = (
         config_prefix               => '_build_config_prefix',
+        config_prefixes             => '_build_config_prefixes',
         config_identifier           => '_build_config_identifier',
         config_prefix_map_separator => '_build_config_prefix_map_separator',
         config_extensions           => '_build_config_extensions',
@@ -123,9 +125,23 @@ in default initializers for appropriate role attributes:
 
 Default for L<MooX::ConfigFromFile::Role/config_prefix>.
 
+=item C<config_prefixes>
+
+Default for L<MooX::ConfigFromFile::Role/config_prefixes>. Ensure when use
+this flag together with L<MooX::Cmd> to load C<MooX::ConfigFromFile> before
+C<MooX::Cmd>.
+
 =item C<config_prefix_map_separator>
 
 Default for L<MooX::ConfigFromFile::Role/config_prefix_map_separator>.
+
+  package Foo;
+
+  # apply role MooX::ConfigFromFile::Role and override default for
+  # attribute config_prefix_map_separator
+  use MooX::ConfigFromFile config_prefix_map_separator => "~";
+
+  ...
 
 =item C<config_extensions>
 
@@ -136,6 +152,12 @@ Default for L<MooX::ConfigFromFile::Role/config_extensions>.
 Default for L<MooX::ConfigFromFile::Role/config_dirs>.
 Same warning regarding modifying this attribute applies here:
 Possible, but use with caution!
+
+  package Foo;
+
+  use MooX::ConfigFromFile config_dirs => [qw(/opt/foo/etc /home/alfred/area/foo/etc)];
+
+  ...
 
 =item C<config_files>
 
@@ -154,6 +176,19 @@ from applicable modifiers per class (and singletons are per class).
 =item C<config_identifier>
 
 Default for L<MooX::File::ConfigDir/config_identifier>.
+
+  package Foo;
+
+  # apply role MooX::ConfigFromFile::Role and override default for
+  # attribute config_identifier - means to look e.g. in /etc/foo/
+  use MooX::ConfigFromFile config_identifier => "foo";
+
+  ...
+
+=item C<config_hashmergeloaded>
+
+Consumes role L<MooX::ConfigFromFile::Role::HashMergeLoaded> directly after
+L<MooX::ConfigFromFile::Role> has been consumed.
 
 =back
 
