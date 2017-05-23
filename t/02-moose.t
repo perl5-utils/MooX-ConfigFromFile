@@ -17,9 +17,9 @@ $ENV{WHICH_MOODEL} = "Moose";
 
 unshift @INC, "." unless grep { "." eq $_ } @INC;
 
-eval "do 't/testerr.pm'";
-eval "do 't/testlib.pm'";
-eval "use MooX::Cmd 0.012; do 't/testmxcmd.pm'";
-eval "{package MooX::ConfigFromFile::Test::Availability::Of::MooX::Options; use $OO; use MooX::Options 4.001; }; do 't/testmxopt.pm'";
+do 't/testerr.pm';
+do 't/testlib.pm';
+eval "use MooX::Cmd 0.012;" and do 't/testmxcmd.pm';
+eval "{package MooX::ConfigFromFile::Test::Availability::Of::MooX::Options; use $OO; use MooX::Options 4.001; };" and do 't/testmxopt.pm';
 
 done_testing;
