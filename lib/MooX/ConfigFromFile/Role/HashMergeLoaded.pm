@@ -97,7 +97,7 @@ Jens Rehsack, C<< <rehsack at cpan.org> >>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright 2015 Jens Rehsack.
+Copyright 2015-2017 Jens Rehsack.
 
 This program is free software; you can redistribute it and/or modify it
 under the terms of either: the GNU General Public License as published
