@@ -13,8 +13,8 @@ unshift @INC, "." unless grep { "." eq $_ } @INC;
 
 do 't/testerr.pm';
 do 't/testlib.pm';
-eval "use MooX::Cmd 0.012;" and do 't/testmxcmd.pm';
-eval "{package MooX::ConfigFromFile::Test::Availability::Of::MooX::Options; use Moo; use MooX::Options 4.001; };"
+eval "use MooX::Cmd 0.012; 1" and do 't/testmxcmd.pm';
+eval "{package MooX::ConfigFromFile::Test::Availability::Of::MooX::Options; use Moo; use MooX::Options 4.001; }; 1"
   and do 't/testmxopt.pm';
 
 done_testing;
