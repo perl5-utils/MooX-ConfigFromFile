@@ -10,6 +10,7 @@ use Hash::Merge;
 use Moo::Role;
 
 requires "loaded_config";
+requires "sorted_loaded_config";
 
 has "config_merger" => (is => "lazy");
 
@@ -18,11 +19,11 @@ sub _build_config_merger { Hash::Merge->new('LEFT_PRECEDENT') }
 around _build_loaded_config => sub {
     my ($next, $class, $params) = @_;
 
-    defined $params->{raw_loaded_config} or $params->{raw_loaded_config} = $class->_build_raw_loaded_config($params);
-    defined $params->{config_merger}     or $params->{config_merger}     = $class->_build_config_merger($params);
+    defined $params->{sorted_loaded_config} or $params->{sorted_loaded_config} = $class->_build_sorted_loaded_config($params);
+    defined $params->{config_merger}        or $params->{config_merger}        = $class->_build_config_merger($params);
 
     my $config_merged = {};
-    for my $c (map { values %$_ } @{$params->{raw_loaded_config}})
+    for my $c (map { values %$_ } @{$params->{sorted_loaded_config}})
     {
         %$config_merged = %{$params->{config_merger}->merge($config_merged, $c)};
     }
