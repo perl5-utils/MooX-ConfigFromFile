@@ -23,7 +23,8 @@ sub import
         return if $target->can('_initialize_from_config');
         my $with = $target->can('with');
         $with->('MooX::ConfigFromFile::Role');
-        $import_options{config_hashmergeloaded} and $with->('MooX::ConfigFromFile::Role::HashMergeLoaded');
+        $import_options{config_sortedbyfilename} and $with->('MooX::ConfigFromFile::Role::SortedByFilename');
+        $import_options{config_hashmergeloaded}  and $with->('MooX::ConfigFromFile::Role::HashMergeLoaded');
     };
     $apply_modifiers->();
 
