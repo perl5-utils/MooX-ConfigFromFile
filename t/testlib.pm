@@ -189,7 +189,8 @@ foreach my $copy_attr ('raw_loaded_config', 'sorted_loaded_config', map { "confi
     cmp_ok($fivadd->execute, "==", 7, "read topmost adder config using $copy_attr");
 }
 
-foreach my $copy_attr (map { "config_$_" } qw(extensions dirs prefix_map_separator prefixes prefix_map files_pattern files))
+@copy_attrs = qw(extensions dirs prefix prefixes prefix_map prefix_map_separator files_pattern files);
+foreach my $copy_attr ('sorted_loaded_config', map { "config_$_" } @copy_attrs)
 {
     my $subber = Calc::sub->new($copy_attr => $adder->$copy_attr);
     ok(defined($subber->a), "read \"a\" from sub config using $copy_attr");
