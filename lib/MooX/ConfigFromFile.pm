@@ -66,6 +66,13 @@ sub import
 
 MooX::ConfigFromFile - Moo eXtension for initializing objects from config file
 
+=begin html
+
+<a href="https://travis-ci.org/perl5-utils/MooX-ConfigFromFile"><img src="https://travis-ci.org/perl5-utils/MooX-ConfigFromFile.svg?branch=master" alt="Travis CI"/></a>
+<a href='https://coveralls.io/github/perl5-utils/MooX-ConfigFromFile?branch=master'><img src='https://coveralls.io/repos/github/perl5-utils/MooX-ConfigFromFile/badge.svg?branch=master' alt='Coverage Status'/></a>
+
+=end html
+
 =head1 SYNOPSIS
 
    package Role::Action;
